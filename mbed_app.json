@@ -1,75 +1,54 @@
 {
     "macros": [
-        "ARM_UC_USE_PAL_BLOCKDEVICE=1",
-	    "MBED_CLIENT_DTLS_PEER_MAX_TIMEOUT=100000",
         "CELLULAR_DEVICE=QUECTEL_BG96",
         "MDMTXD=D1",
         "MDMRXD=D0",
-        "MDMRTS=p3",
-        "MDMCTS=p4"
+        "MDMRTS=D12",
+        "MDMCTS=A1"
     ],
-    "config": {
-        "developer-mode": {
-            "help"      : "Enable Developer mode to skip Factory enrollment",
-            "options"   : [null, 1],
-            "value"     : 1
-        },
-        "button-pinname": {
-            "help"      : "PinName for button.",
-            "value"     : "BUTTON3"
-        },
-        "provide-default-variant": {
-            "value": "AVNET_BG96"
-        },
-        "led-pinname"   : {
-            "help"      : "PinName for led, which is attached to led blink resource.",
-            "value"     : "LED1"
-        }
-    },
-
     "target_overrides": {
         "*": {
             "target.components_remove"                  : ["FLASHIAP"],
             "platform.stdio-baud-rate"                  : 115200,
             "platform.stdio-convert-newlines"           : true,
-            "mbed-trace.enable"                         : true,
-            "nsapi.default-wifi-security"               : "WPA_WPA2",
-            "nsapi.default-wifi-ssid"                   : "\"SSID\"",
-            "nsapi.default-wifi-password"               : "\"Password\""
-        },
-       "NRF52840_DK": {
-            "nordic.uart_0_fifo_size": 120,
-            "nordic.uart_1_fifo_size": 120,
-            "cellular.debug-at": 1,
-            "target.features_add"                       : ["STORAGE", "LWIP"],
-            "target.components_add"                     : ["SPIF"],
-            "target.network-default-interface-type"     : "CELLULAR",
-            "target.OUTPUT_EXT": "hex",
-      	    "target.features_remove": [ "CRYPTOCELL310" ],
-            "target.macros_remove": [ "MBEDTLS_CONFIG_HW_SUPPORT" ],
-            "lwip.ipv4-enabled"                         : true,
-            "lwip.ethernet-enabled"                     : false,
-            "lwip.ppp-enabled"                          : true,
-            "lwip.tcp-enabled"                          : true,
-      	    "nsapi.default-cellular-apn": "\"broadband\"",
+            "platform.default-serial-baud-rate": 115200,
+            "platform.stdio-buffered-serial": true
+       },
+	"NRF52840_DK": {
+            "target.network-default-interface-type" : "CELLULAR",
+	    "target.components_add"             : ["SPIF"],
+            "lwip.ipv4-enabled"                 : true,
+            "lwip.ethernet-enabled"             : false,
+            "lwip.ppp-enabled"                  : true,
+            "lwip.tcp-enabled"                  : true,
+            "platform.error-filename-capture-enabled": true,
+            "platform.error-all-threads-info"   : true,
+            "mbed-trace.enable"                 : true,
+            "device-management.flash-start-address"               : "0x00000000",
+            "device-management.flash-size"                        : "(1024*1024)",
+            "device-management.sotp-section-1-address"            : "(MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 2*(4*1024))",
+            "device-management.sotp-section-1-size"               : "(4*1024)",
+            "device-management.sotp-section-2-address"            : "(MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 1*(4*1024))",
+            "device-management.sotp-section-2-size"               : "(4*1024)",
+            "device-management.sotp-num-sections"                 : 2,
+            "target.header_offset"              : "0x2c000",
+            "target.app_offset"                 : "0x2c400",
+            "update-client.application-details" : "0x2c000",
+            "update-client.storage-address"     : "(1*1024*1024)",
+            "update-client.storage-size"        : "(1*1024*1024)",
+            "update-client.storage-locations"   : 1,
+            "events.shared-stacksize"           : 2048,
+            "target.features_remove"            : ["CRYPTOCELL310"],
+            "target.macros_remove"              : ["MBEDTLS_CONFIG_HW_SUPPORT"],
+            "target.features_add"               : ["BOOTLOADER"],
+            "target.bootloader_img"             : "bootloader/mbed-bootloader-NRF52840_DK.hex",
+            "target.device_has_add": [
+                "STDIO_MESSAGES"
+            ],
+      	    "nsapi.default-cellular-apn": "\"vzwinternet\"",
       	    "nsapi.default-cellular-password": null,
       	    "nsapi.default-cellular-sim-pin": "\"1234\"",
-      	    "nsapi.default-cellular-username": null,
-            "mbed-trace.enable"                         : true,
-            "device-management.flash-start-address"     : "0x00000000",
-            "device-management.flash-size"              : "(1024*1024)",
-            "device-management.sotp-section-1-address"  : "(MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 2*(128*1024))",
-            "device-management.sotp-section-1-size"     : "(128*1024)",
-            "device-management.sotp-section-2-address"  : "(MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 1*(128*1024))",
-            "device-management.sotp-section-2-size"     : "(128*1024)",
-            "update-client.application-details"         : "0x3B000",
-            "update-client.storage-address"             : "(1*1024*1024)",
-            "update-client.storage-size"                : "(2*1024*1024)",
-            "update-client.storage-locations"           : "1",
-            "target.features_add"                       : ["BOOTLOADER"],
-            "target.bootloader_img"                     : "bootloader/mbed-bootloader-NRF52840_DK.hex",
-            "target.header_offset"                      : "0x3B000",
-            "target.app_offset"                         : "0x3B400"
+      	    "nsapi.default-cellular-username": null
         },
         "K64F": {
             "target.components_add"                     : ["SD"],
