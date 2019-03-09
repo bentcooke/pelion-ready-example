@@ -23,7 +23,7 @@
             "lwip.tcp-enabled"                  : true,
             "platform.error-filename-capture-enabled": true,
             "platform.error-all-threads-info"   : true,
-            "mbed-trace.enable"                 : true,
+            "mbed-trace.enable"                 : null,
             "device-management.flash-start-address"               : "0x00000000",
             "device-management.flash-size"                        : "(1024*1024)",
             "device-management.sotp-section-1-address"            : "(MBED_CONF_APP_FLASH_START_ADDRESS + MBED_CONF_APP_FLASH_SIZE - 2*(4*1024))",
@@ -673,7 +673,7 @@
         },
         "button-pressed-state": {
             "help": "Value of the button when pressed",
-            "value": 1
+            "value": 0
         },
         "no_led": {
             "help": "This flag disables the heartbeat thread in tests. This is useful for platforms that don't have an LED or the LED is used for other functionality like LED on the SPI clockline etc",
